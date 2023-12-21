@@ -1,4 +1,4 @@
-package ru.netology.data.l31_springjbdc.repository;
+package ru.netology.data.l31_springjdbc.repository;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class OrderJdbcRepository {
+public class OrderJdbcRepository implements OrderRepository {
     private static final String SELECT_PRODUCT_NAME_TMPL = "select-product-name.tmpl.sql";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;

@@ -1,4 +1,4 @@
-package ru.netology.data.l31_springjbdc.repository;
+package ru.netology.data.l31_springjdbc.repository;
 
 public interface SqlQueryRepository {
 

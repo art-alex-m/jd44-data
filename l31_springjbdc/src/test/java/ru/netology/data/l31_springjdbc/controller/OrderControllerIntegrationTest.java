@@ -1,4 +1,4 @@
-package ru.netology.data.l31_springjbdc.controller;
+package ru.netology.data.l31_springjdbc.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

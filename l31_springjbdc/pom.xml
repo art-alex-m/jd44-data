@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ru.netology.data</groupId>
-    <artifactId>l31_springjbdc</artifactId>
+    <artifactId>l31springjbdc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>l31_springjbdc</name>
-    <description>l31_springjbdc</description>
+    <name>l31_springjdbc</name>
+    <description>l31_springjdbc</description>
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -1,6 +1,7 @@
 package ru.netology.data.l31_springjdbc.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 import ru.netology.data.l31_springjdbc.entity.Customer;
 import ru.netology.data.l31_springjdbc.entity.Order;
@@ -9,10 +10,12 @@ import java.util.List;
 
 public class OrderHibernateRepository implements OrderRepository {
 
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
-    public OrderHibernateRepository(EntityManager entityManager) {
+    @PersistenceContext
+    public OrderHibernateRepository setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
+        return this;
     }
 
     @Override

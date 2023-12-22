@@ -1,7 +1,7 @@
 package ru.netology.data.l31_springjdbc;
 
-import jakarta.persistence.EntityManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -22,7 +22,9 @@ public class L31SpringjdbcConfig {
 
     @Bean
     @ConditionalOnProperty(prefix = "netology", name = "repository.use-jdbc", havingValue = "false")
-    public OrderRepository orderHibernateRepository(EntityManager entityManager) {
-        return new OrderHibernateRepository(entityManager);
+    public OrderRepository orderHibernateRepository(ApplicationContext context) {
+        return context
+                .getAutowireCapableBeanFactory()
+                .createBean(OrderHibernateRepository.class);
     }
 }

@@ -3,15 +3,31 @@ package ru.netology.data.l31_springjdbc.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 import ru.netology.data.l31_springjdbc.entity.Customer;
 import ru.netology.data.l31_springjdbc.entity.Order;
 
 import java.util.List;
 
+@Repository
+@ConditionalOnProperty(prefix = "netology", name = "repository.use-jdbc", havingValue = "false")
 public class OrderHibernateRepository implements OrderRepository {
 
     private EntityManager entityManager;
 
+    /**
+     * Canonical EntityManager injection for controlled class testing
+     *
+     * <p>
+     * <a href="https://docs.spring.io/spring-framework/reference/data-access/orm/jpa.html#orm-jpa-dao">Implementing DAOs Based on JPA: EntityManagerFactory and EntityManager</a>
+     * <br>
+     * <a href="https://www.baeldung.com/jpa-hibernate-persistence-context">JPA/Hibernate Persistence Context</a>
+     * </p>
+     *
+     * @param entityManager EntityManager
+     * @return self
+     */
     @PersistenceContext
     public OrderHibernateRepository setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;

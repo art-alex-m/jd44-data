@@ -1,5 +1,6 @@
 package ru.netology.data.l31_springjdbc.repository;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@ConditionalOnProperty(prefix = "netology", name = "repository.use-jdbc", havingValue = "true")
 public class OrderJdbcRepository implements OrderRepository {
     private static final String SELECT_PRODUCT_NAME_TMPL = "select-product-name.tmpl.sql";
 

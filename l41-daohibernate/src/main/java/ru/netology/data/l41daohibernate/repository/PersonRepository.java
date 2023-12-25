@@ -1,39 +1,50 @@
 package ru.netology.data.l41daohibernate.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.netology.data.l41daohibernate.entity.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class PersonRepository {
-
-    @PersistenceContext
-    private EntityManager entityManager;
+public interface PersonRepository extends CrudRepository<Person, Person.PrimaryKey> {
 
     /**
-     * Get list of dwellers
-     * <p>
-     * <a href="https://www.baeldung.com/jpa-and-or-criteria-predicates">Combining JPA And/Or Criteria Predicates</a>
-     * </p>
+     * Added as backward compatibility to previous behavior PersonHibernateRepository.getPersonsByCity()
      *
-     * @param city City
-     * @return List of Persons or empty list
+     * @param cityOfLiving City o living
+     * @return list of persons or empty list
      */
-    public List<Person> getPersonsByCity(String city) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Person> criteriaQuery = builder.createQuery(Person.class);
-        Root<Person> rootItem = criteriaQuery.from(Person.class);
-
-        if (city != null && !city.isEmpty()) {
-            criteriaQuery.where(builder.equal(rootItem.get("cityOfLiving"), city.toLowerCase()));
-        }
-
-        return entityManager.createQuery(criteriaQuery).getResultList();
+    default List<Person> getPersonsByCity(String cityOfLiving) {
+        return cityOfLiving == null || cityOfLiving.isEmpty()
+                ? (List<Person>) findAll()
+                : findPersonsByCityOfLivingIgnoreCase(cityOfLiving);
     }
+
+    List<Person> findPersonsByCityOfLivingIgnoreCase(String cityOfLiving);
+
+    List<Person> findPersonsByPrimaryKey_AgeLessThanOrderByPrimaryKey_AgeAsc(int age);
+
+    Optional<Person> findPersonByPrimaryKey_NameAndPrimaryKey_Surname(String name, String surname);
+
+    /**
+     * Query alias for findPersonByPrimaryKey_NameAndPrimaryKey_Surname()
+     * Also this can be made dy default interface method
+     *
+     * <pre><code class="java">
+     *
+     * default Optional<Person> findPersonByNameAndSurname(String name, String surname) {
+     *     return findPersonByPrimaryKey_NameAndPrimaryKey_Surname(String name, String surname);
+     * }
+     *
+     * </code></pre>
+     *
+     * @param name    Name
+     * @param surname Surname
+     * @return Optional result
+     */
+    @Query("select p from Person p where p.primaryKey.name = :name and p.primaryKey.surname = :surname")
+    Optional<Person> findPersonByNameAndSurname(String name, String surname);
 }

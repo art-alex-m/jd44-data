@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.netology.data.l41daohibernate.entity.Person;
@@ -21,8 +22,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class PersonRepositoryTest {
 
-    @Autowired
     PersonRepository sut;
+
+    @Autowired
+    void setSut(@Qualifier("personRepository") PersonRepository sut) {
+        this.sut = sut;
+    }
 
     public static Stream<Arguments> findPersonsByCityOfLivingIgnoreCase() {
         return Stream.of(

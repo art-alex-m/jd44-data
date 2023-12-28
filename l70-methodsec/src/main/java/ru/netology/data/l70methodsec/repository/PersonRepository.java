@@ -17,6 +17,8 @@ public interface PersonRepository extends CrudRepository<Person, Person.PrimaryK
 
     Optional<Person> findPersonByPrimaryKey_NameAndPrimaryKey_Surname(String name, String surname);
 
+    Optional<Person> findPerson1ByPrimaryKey_NameIgnoreCase(String name);
+
     /**
      * Query alias for findPersonByPrimaryKey_NameAndPrimaryKey_Surname()
      * Also this can be made dy default interface method

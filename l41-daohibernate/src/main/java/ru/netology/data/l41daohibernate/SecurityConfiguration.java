@@ -22,6 +22,7 @@ import java.util.List;
  * <a href="https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter/">Spring Security without the WebSecurityConfigurerAdapter</a><br>
  * <a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/builders/HttpSecurity.html">Class HttpSecurity</a><br>
  * <a href="https://www.baeldung.com/spring-security-expressions">Intro to Spring Security Expressions</a><br>
+ * <a href="https://spring.io/guides/topicals/spring-security-architecture/">Spring Security Architecture</a><br>
  * </p>
  */
 @Configuration

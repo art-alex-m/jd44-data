@@ -6,9 +6,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.netology.data.l70methodsec.entity.Person;
 
@@ -17,19 +17,17 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("security-disabled")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PersonControllerIntegrationTest {
 
     @Autowired
     TestRestTemplate restTemplate;
 
-    @LocalServerPort
-    private int port;
-
     @Test
     void givenMoscowCityName_whenFindPersonsByCity_thenSuccessList() {
         String city = "moscow";
-        String uri = getUri("persons/by-city").queryParam("city", city).toUriString();
+        String uri = getUri("/persons/by-city").queryParam("city", city).toUriString();
 
         ResponseEntity<Person[]> result = restTemplate.getForEntity(uri, Person[].class);
 
@@ -92,8 +90,8 @@ class PersonControllerIntegrationTest {
 
 
     public UriComponentsBuilder getUri(String path) {
-        return UriComponentsBuilder.fromHttpUrl("http://localhost")
-                .port(port)
+        return UriComponentsBuilder
+                .fromHttpUrl(restTemplate.getRootUri())
                 .path(path);
     }
 }
